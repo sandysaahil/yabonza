@@ -10,8 +10,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
-import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import javax.transaction.Transactional;
@@ -19,6 +17,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Manages the Dog breed service - Stores dog breed images in Store (AWS S3) and other details in
+ * Database
+ */
 @Service
 @Slf4j
 public class YabonzaService {
@@ -29,6 +31,9 @@ public class YabonzaService {
     private ImageService imageService;
     private RestTemplate restTemplate;
 
+    /**
+     * API is generate random dog breed images
+     */
     @Value("${yabonza.dog.image.url}")
     private String dogImageUrl;
 
@@ -40,9 +45,14 @@ public class YabonzaService {
         this.restTemplate = restTemplate;
     }
 
+    /**
+     * Stores dog images in AWS S3 and other details in Database
+     * @return
+     */
     @Transactional
     public Dog storeDog() {
 
+        log.info("YabonzaService.storeDog() - Started");
         ResponseEntity<RandomDogImage> randomDogImage = restTemplate.getForEntity(dogImageUrl, RandomDogImage.class);
 
         if(randomDogImage.getStatusCode() != HttpStatus.OK
@@ -56,26 +66,44 @@ public class YabonzaService {
         final String dogBreedName = getDogBreedName(imageUrl);
         String s3ImageUrl = imageService.storeDog(dogBreedName, imageUrl);
 
+        log.info("YabonzaService.storeDog() - Dog image is successfully stored in S3");
+
         final Dog dog = new Dog(null, dogBreedName, s3ImageUrl, new Date());
 
-        return dogRepository.save(dog);
+        Dog savedDog = dogRepository.save(dog);
+
+        log.info("YabonzaService.storeDog() - Completed. Dog data is stored successfully - "+savedDog.toString());
+        return savedDog;
     }
 
+    /**
+     * The name of the dog breed is in the Dog image random API URL
+     *
+     * @param dogImageUrl
+     * @return
+     */
     private String getDogBreedName(String dogImageUrl) {
 
         String[] split = dogImageUrl.split("/");
-        return split[split.length - 2];
+        String dogBreedName = split[split.length - 2];
+        log.info("YabonzaService.getDogBreedName() - The name of the breed is : "+dogBreedName);
+
+        return dogBreedName;
     }
 
     public Optional<Dog> getDogWithId(Long id) {
-
        return dogRepository.findById(id);
-
     }
 
+    /**
+     * Removes te dog image form AWS S3 and details from Database
+     *
+     * @param id
+     */
     @Transactional
     public void removeDogById(Long id) {
 
+        log.info("YabonzaService.removeDogById() - Started");
         Optional<Dog> dogWithId = this.getDogWithId(id);
 
         if(dogWithId.isPresent()) {
@@ -86,6 +114,7 @@ public class YabonzaService {
 
         }
         // Nothing to be done if dog is not found in repository
+        log.info("YabonzaService.removeDogById() - Finished. Dog with id : "+ id + " deleted Succefully");
     }
 
     public List<Dog> getDogWithBreed(String breed) {

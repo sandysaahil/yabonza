@@ -14,6 +14,9 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Endpoint API for all the dog breed operations
+ */
 @RestController
 @RequestMapping("/v1")
 @Slf4j
@@ -34,7 +37,7 @@ public class DogController {
      * @throws Exception
      */
     @RequestMapping(value = "/dog", method = RequestMethod.POST)
-    public ResponseEntity<Dog> getDog()  throws Exception {
+    public ResponseEntity<Dog> storeDog()  throws Exception {
 
         try {
 
@@ -46,6 +49,12 @@ public class DogController {
         }
     }
 
+    /**
+     * Retrieves the Dog details based on the id passed
+     *
+      * @param id id of the dog in database
+     * @return
+     */
     @RequestMapping(value = "/dog/{id}", method = RequestMethod.GET)
     public ResponseEntity<Dog> getDog(@PathVariable("id") String id) {
 
@@ -73,6 +82,13 @@ public class DogController {
         }
     }
 
+    /**
+     * Removes the record from the database with the given id and also removes breed image
+     * from datastore
+     *
+     * @param id
+     * @return
+     */
     @RequestMapping(value = "/dog/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<String> removeDog(@PathVariable("id") String id) {
 
@@ -95,6 +111,12 @@ public class DogController {
         }
     }
 
+    /**
+     * Retrieves all the dog breed information from the DB based on the given breed name
+     *
+     * @param breed
+     * @return
+     */
     @RequestMapping(value = "/dog/search/{breed}", method = RequestMethod.GET)
     public ResponseEntity<List<Dog>> searchDogByBreed(@PathVariable("breed") String breed) {
 
@@ -115,6 +137,11 @@ public class DogController {
         }
     }
 
+    /**
+     * Retrieves all the distinct dog breed names in the system
+     *
+     * @return
+     */
     @RequestMapping(value = "/dogs", method = RequestMethod.GET)
     public ResponseEntity<List<String>> searchBreeds() {
 

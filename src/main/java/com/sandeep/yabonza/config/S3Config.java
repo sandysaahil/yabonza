@@ -12,9 +12,11 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class S3Config {
 
+    // read from environment variables to maintain security
     @Value("${jsa.aws.access_key_id}")
     private String awsId;
 
+    // read from environment variables to maintain security
     @Value("${jsa.aws.secret_access_key}")
     private String awsKey;
 
