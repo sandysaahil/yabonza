@@ -28,6 +28,8 @@ s3.bucket.name
 
 S3 permission is only for the program user and not accessible publically. I will switch off the S3 once the test is reviewed.
 
+![Environment Variables setting in IntelliJ](https://github.com/sandysaahil/yabonza/blob/master/src/main/resources/static/Environment%20Variables.png)
+
 ### Database
 
 For simplicity, I am using in memory H2 Database which will be wiped everytime the application is stopped. So the ideal way to run is to first create some dogs in the system using APIs
