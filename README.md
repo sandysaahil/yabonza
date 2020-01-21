@@ -8,9 +8,9 @@ Once hosted, application will be availble at
 
 `http://localhost:8080/v1/dog/{id} - Removes the record with the given id (DELETE method)`
 
-`http://localhost:8080/v1/dog/search/{breed} - Retrieves all the dog breed information based on the given breed name`
+`http://localhost:8080/v1/dog/search/{breed} - Retrieves all the dog breed information based on the given breed name (GET method)`
 
-`http://localhost:8080/v1/dogs - Retrieves all the distinct dog breed names in the system`
+`http://localhost:8080/v1/dogs - Retrieves all the distinct dog breed names in the system (GET method)`
 
 ### Prerequisites
 Application is built using Spring Boot, Java 1.8 and Maven. Java and Maven need to be installed before running the application.
