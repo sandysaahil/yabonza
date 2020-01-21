@@ -1,5 +1,13 @@
 # Yabonza Test
 
+Once hosted, application will be availble at
+
+http://localhost:8080/v1/dog - Generates a new Dog Breed (POST method)
+http://localhost:8080/v1/dog/{id} - Retrieves the Dog details based on the id passed (GET method)
+http://localhost:8080/v1/dog/{id} - Removes the record with the given id (DELETE method)
+http://localhost:8080/v1/dog/search/{breed} - Retrieves all the dog breed information based on the given breed name
+http://localhost:8080/v1/dogs - Retrieves all the distinct dog breed names in the system
+
 ### Prerequisites
 Application is built using Spring Boot, Java 1.8 and Maven. Java and Maven need to be installed before running the application.
 
