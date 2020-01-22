@@ -46,5 +46,11 @@ S3 permission is only for the program user and not accessible publically. I will
 
 For simplicity, I am using in memory H2 Database which will be wiped everytime the application is stopped. So the ideal way to run is to first create some dogs in the system using APIs
 
+To browse database, please use http://locahost:8080/h2-console and use following properties
+
+![Database configurations](https://github.com/sandysaahil/yabonza/blob/master/src/main/resources/static/database%20config.png)
+
+Password = password
+
 ### API Documentation (Swagger)
 API documentation is available at (once application is deployed) - http://locahost:8080/swagger-ui.html
